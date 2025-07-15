@@ -1,0 +1,28 @@
+﻿@page
+@model ProductsModel
+@{
+    ViewData["Title"] = "Каталог товаров";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col">
+            <div class="card h-100 product-card">
+                <img src="@product.ImageRoute" class="card-img-top" alt="@product.Name" />
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">Краткое описание товара, если оно есть...</p>
+                    <h6 class="card-subtitle mb-2 text-muted">@product.Price.ToString("C")</h6>
+                </div>
+                <div class="card-footer text-center">
+                    <!-- ЭТО КЛЮЧЕВАЯ ЧАСТЬ -->
+                    <!-- Ссылка, которая генерирует URL вида /product/ID_ТОВАРА -->
+                    <a asp-page="/Product" asp-route-id="@product.Id" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
