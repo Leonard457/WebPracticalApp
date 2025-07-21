@@ -1,0 +1,16 @@
+﻿@page
+@{
+    ViewData["Title"] = "Заказ оформлен!";
+}
+
+<div class="text-center py-5">
+    <div class="mb-4">
+        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+    </div>
+    <h1 class="display-4 text-success">Заказ успешно оформлен!</h1>
+    <p class="lead">Спасибо за покупку! Ваш заказ принят и будет обработан в ближайшее время.</p>
+    <div class="mt-4">
+        <a asp-page="/Index" class="btn btn-primary me-2">На главную</a>
+        <a asp-page="/Products/Index" class="btn btn-outline-primary">Продолжить покупки</a>
+    </div>
+</div>

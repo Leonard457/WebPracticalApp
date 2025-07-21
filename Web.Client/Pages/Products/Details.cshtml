@@ -1,0 +1,42 @@
+﻿@page "{id:int}"
+@model PetShop.Web.Client.Pages.Products.DetailsModel
+@{
+    ViewData["Title"] = Model.Product.Name;
+}
+
+<h1>@Model.Product.Name</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <img src="/img/product/@(Model.Product.ImageUrl ?? "placeholder").jpg"
+             class="img-fluid"
+             alt="@Model.Product.Name"
+             onerror="this.onerror=null;this.src='/img/product/placeholder.jpg';" />
+    </div>
+    <div class="col-md-6">
+        <h4>Description</h4>
+        <p>@Model.Product.Description</p>
+        <hr />
+        <h4>Price: <span class="text-success">@Model.Product.Price.ToString("C")</span></h4>
+        <p>In stock: @Model.Product.StockQuantity</p>
+
+        @if (Model.Product.StockQuantity > 0)
+        {
+            <form method="post" asp-page-handler="AddToCart">
+                <input type="hidden" name="productId" value="@Model.Product.Id" />
+                <button type="submit" class="btn btn-lg btn-success">Add to Cart</button>
+            </form>
+        }
+        else
+        {
+            <p class="text-danger">Out of Stock</p>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.StatusMessage))
+        {
+            <div class="alert alert-success mt-3" role="alert">
+                @Model.StatusMessage
+            </div>
+        }
+    </div>
+</div>

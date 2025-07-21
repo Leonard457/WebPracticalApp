@@ -1,0 +1,82 @@
+﻿@page
+@model PetShop.Web.Client.Pages.Car_t.IndexModel
+@{
+    ViewData["Title"] = "Моя корзина";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+@if (Model.UserCart != null && Model.UserCart.Items.Any())
+{
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger">@Model.ErrorMessage</div>
+    }
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Товар</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th class="text-end">Сумма</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.UserCart.Items)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-page="/Products/Details" asp-route-id="@item.ProductId" class="text-decoration-none">
+                                    <strong>@item.Product.Name</strong>
+                                </a>
+                            </td>
+                            <td>@item.Product.Price.ToString("C")</td>
+                            <td>
+                                <form method="post" asp-page-handler="UpdateQuantity" class="d-flex align-items-center">
+                                    <input type="hidden" name="itemId" value="@item.Id" />
+                                    <input type="number" name="quantity" value="@item.Quantity" min="1" max="@item.Product.StockQuantity" 
+                                           class="form-control form-control-sm" style="width: 70px;" />
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary ms-2">Обновить</button>
+                                </form>
+                            </td>
+                            <td class="text-end">@((item.Quantity * item.Product.Price).ToString("C"))</td>
+                            <td class="text-end">
+                                <form method="post" asp-page-handler="RemoveItem">
+                                    <input type="hidden" name="itemId" value="@item.Id" />
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Итого:</strong></td>
+                        <td class="text-end"><strong>@Model.TotalPrice.ToString("C")</strong></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a asp-page="/Products/Index" class="btn btn-outline-primary">Продолжить покупки</a>
+        <form method="post" asp-page-handler="Checkout">
+            <button type="submit" class="btn btn-success">Оформить заказ</button>
+        </form>
+    </div>
+}
+else
+{
+    <div class="text-center py-5">
+        <i class="bi bi-cart-x" style="font-size: 4rem;"></i>
+        <h3 class="mt-3">Ваша корзина пуста</h3>
+        <p class="text-muted">Добавьте товары в корзину, чтобы продолжить</p>
+        <a asp-page="/Products/Index" class="btn btn-primary mt-3">Перейти в каталог</a>
+    </div>
+}
