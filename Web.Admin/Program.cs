@@ -81,6 +81,52 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred while seeding the database.");
     }
 }
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    try
+    {
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var configuration = services.GetRequiredService<IConfiguration>();
 
+        string adminEmail = configuration["AdminUser:Email"];
+        string newPassword = configuration.GetValue<string>("AdminUser:Password");
+
+        // Находим существующего пользователя-администратора
+        var adminUser = await userManager.FindByEmailAsync(adminEmail);
+
+        if (adminUser != null && !string.IsNullOrEmpty(newPassword))
+        {
+            // Сначала удаляем старый пароль. Это более надежно.
+            await userManager.RemovePasswordAsync(adminUser);
+            // Теперь удаляем старую Почту
+            await userManager.SetEmailAsync(adminUser, null);
+
+            // Затем добавляем новый пароль из secrets.json
+            var result = await userManager.AddPasswordAsync(adminUser, newPassword);
+            // И устанавливаем новую почту
+            await userManager.SetEmailAsync(adminUser, adminEmail);
+
+            if (result.Succeeded)
+            {
+                logger.LogWarning("!!! ВНИМАНИЕ: Пароль администратора был успешно изменен. !!!");
+                logger.LogWarning("!!! Пожалуйста, удалите временный код для сброса пароля из Program.cs !!!");
+            }
+            else
+            {
+                // Выводим ошибки, если они были
+                foreach (var error in result.Errors)
+                {
+                    logger.LogError($"Ошибка при смене пароля: {error.Description}");
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Произошла ошибка во время выполнения временного кода сброса пароля.");
+    }
+}
 
 app.Run();//Account/Login
