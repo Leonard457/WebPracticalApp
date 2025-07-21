@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PetShop.Core.Entities
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        // Если пользователь вошел в систему
+        var user = await UserManager.GetUserAsync(User);
+        <li class="nav-item">
+            <a id="manage" class="nav-link text-light" title="Manage">Hello @(user?.FirstName ?? user?.UserName)!</a>
+        </li>
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post">
+                <button id="logout" type="submit" class="nav-link btn btn-link text-light">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        // Если пользователь не вошел в систему
+        <li class="nav-item">
+            <a class="nav-link text-light" id="login" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+</ul>

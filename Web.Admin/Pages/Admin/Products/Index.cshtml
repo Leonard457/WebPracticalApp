@@ -1,0 +1,40 @@
+﻿@page
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+@model PetShop.Web.Admin.Pages.Admin.Products.IndexModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Product[0].Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Product[0].Price)</th>
+            <th>@Html.DisplayNameFor(model => model.Product[0].StockQuantity)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Product != null)
+        {
+            @foreach (var item in Model.Product)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StockQuantity)</td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-secondary btn-sm">Edit</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,10 +1,38 @@
 ﻿@page
-@model IndexModel
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+@model PetShop.Web.Admin.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Dashboard";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to the Admin Dashboard</h1>
+    <p>Use the links below to manage your store.</p>
+</div>
+
+<hr />
+
+<div class="row text-center">
+    <!-- Карточка со статистикой по товарам -->
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Products</h5>
+                <p class="card-text display-4">@Model.ProductCount</p>
+                <a asp-page="/Admin/Products/Index" class="btn btn-primary">Manage Products</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Карточка со статистикой по пользователям -->
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Registered Users</h5>
+                <p class="card-text display-4">@Model.UserCount</p>
+                <a asp-page="/Admin/Users/Index" class="btn btn-info">View Users</a>
+            </div>
+        </div>
+    </div>
 </div>

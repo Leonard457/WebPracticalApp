@@ -1,0 +1,59 @@
+﻿@page "{id}"
+@model PetShop.Web.Admin.Pages.Admin.Users.DetailsModel
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h1>User Details</h1>
+
+@if (Model.UserDetail != null)
+{
+    <div class="card">
+        <div class="card-header">
+            <h3>@Model.UserDetail.FirstName @Model.UserDetail.LastName</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Email:</strong> @Model.UserDetail.Email</p>
+            <p><strong>Registered on:</strong> @Model.UserDetail.RegistrationDate.ToShortDateString()</p>
+        </div>
+    </div>
+
+    <h3 class="mt-4">User's Cart</h3>
+
+    @if (Model.UserDetail.Cart != null && Model.UserDetail.Cart.Items.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price per item</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.UserDetail.Cart.Items)
+                {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Product.Price.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>This user's cart is empty.</p>
+    }
+
+}
+else
+{
+    <p>User not found.</p>
+}
+<div class="mt-3">
+    <a asp-page="./Index" class="btn btn-secondary">Back to User List</a>
+</div>

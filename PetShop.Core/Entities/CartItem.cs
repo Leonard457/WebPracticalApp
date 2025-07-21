@@ -20,6 +20,6 @@ namespace PetShop.Core.Entities
         // Внешний ключ для связи с продуктом
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
-        public Product Product { get; set; }
+        public Product Product { get; set; } 
     }
 }

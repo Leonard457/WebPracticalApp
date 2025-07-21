@@ -1,0 +1,41 @@
+﻿@page
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+@model Web.Admin.Pages.Admin.Products.ReadModel
+@{
+    ViewData["Title"] = "Product Details";
+}
+<h1>Product Details</h1>
+<div class="card">
+    <div class="card-header">
+        <h3>@Model.Product.Name</h3>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>Описание</th>
+                <td>@Model.Product.Description</td>
+            </tr>
+            <tr>
+                <th>Цена</th>
+                <td>@Model.Product.Price.ToString("C")</td>
+            </tr>
+            <tr>
+                <th>Остаток на складе</th>
+                <td>
+                    @Model.Product.StockQuantity
+                </td>
+            </tr>
+            <tr>
+                <th>Изображение</th>
+                <td>
+                    @Model.Product.ImageUrl
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="card-footer">
+        <a asp-page="./Edit" asp-route-id="@Model.Product.Id" class="btn btn-secondary">Изменить</a>
+        <a asp-page="./Index" class="btn btn-primary">К списку</a>
+    </div>
+</div>

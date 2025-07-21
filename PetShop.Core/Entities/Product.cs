@@ -14,16 +14,16 @@ namespace PetShop.Core.Entities
         public string Name { get; set; } = string.Empty;
 
         [StringLength(1000)]
-        public string? Description { get; set; }
+        public string? Description { get; set; }// Описание продукта, может быть пустым
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")] // Очень важно для денег использовать decimal, чтобы избежать ошибок округления
-        public decimal Price { get; set; }
+        public decimal Price { get; set; }// Цена продукта, обязательное поле
 
         [StringLength(500)]
-        public string? ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }// URL изображения продукта, может быть пустым
 
-        public int StockQuantity { get; set; }
+        public int StockQuantity { get; set; }// Количество на складе, может быть 0 или больше
 
         // Навигационное свойство "один-ко-многим".
         // Один продукт может быть во многих элементах корзины.

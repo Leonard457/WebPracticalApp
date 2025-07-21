@@ -1,0 +1,13 @@
+﻿@page 
+@model PetShop.Web.Admin.Pages.Account.AccessDeniedModel
+@{
+    ViewData["Title"] = "Access Denied";
+    Layout = "_AdminLayout"; // Используем тот же Layout для единообразия
+}
+
+<header class="text-center">
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="lead text-danger">You do not have the required permissions to view this page.</p>
+    <p>This area is restricted to administrators only.</p>
+    <a asp-page="/Index" class="btn btn-primary mt-3">Go to Home Page</a>
+</header>
