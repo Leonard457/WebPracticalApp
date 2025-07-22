@@ -67,8 +67,8 @@
 
 ### 1. Клонирование репозитория
 ```bash
-git clone https://github.com/ВАШ_НИКНЕЙМ/ВАШ_РЕПОЗИТОРИЙ.git
-cd ВАШ_РЕПОЗИТОРИЙ
+git clone https://github.com/Leonard457/Pet-Project_Shop.git
+cd Pet-Project_Shop
 ```
 
 ### 2. Настройка секретов
@@ -80,7 +80,7 @@ cd ВАШ_РЕПОЗИТОРИЙ
 3. Выполните команды для добавления секретов:
    ```bash
    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=(localdb)\\mssqllocaldb;Database=PetShopDb;Trusted_Connection=True;MultipleActiveResultSets=true"
-   dotnet user-secrets set "AdminUser:Password" "ВАШ_СЕКРЕТНЫЙ_ПАРОЛЬ"
+   dotnet user-secrets set "AdminUser:Password" "СЕКРЕТНЫЙ_ПАРОЛЬ"
    ```
 
 **Для проекта `PetShop.Web.Client`:**
