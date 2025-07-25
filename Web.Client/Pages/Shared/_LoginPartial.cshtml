@@ -9,7 +9,7 @@
     {
         var user = await UserManager.GetUserAsync(User);
         <li class="nav-item">
-            <a id="manage" class="nav-link text-dark" title="Manage">
+            <a id="manage" class="nav-link text-dark" asp-page="/Account/Profile/Index" title="Управление профилем">
                 <img src="~/img/icons/account-icon.svg" width="24" height="24" class="me-1" />
                 Hello @(user?.FirstName ?? user?.UserName)!
             </a>

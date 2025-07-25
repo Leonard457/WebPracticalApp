@@ -10,7 +10,9 @@
         // Если пользователь вошел в систему
         var user = await UserManager.GetUserAsync(User);
         <li class="nav-item">
-            <a id="manage" class="nav-link text-light" title="Manage">Hello @(user?.FirstName ?? user?.UserName)!</a>
+            <a id="manage" class="nav-link text-light" asp-page="/Account/Profile/Index" title="Управление профилем">
+                Hello @(user?.FirstName ?? user?.UserName)!
+            </a>
         </li>
         <li class="nav-item">
             <form id="logoutForm" class="form-inline" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post">

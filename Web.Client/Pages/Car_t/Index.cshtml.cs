@@ -8,7 +8,7 @@ using PetShop.Core.Entities;
 
 namespace PetShop.Web.Client.Pages.Car_t
 {
-    [Authorize(Roles = "Customer")]
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
@@ -20,7 +20,7 @@ namespace PetShop.Web.Client.Pages.Car_t
             _userManager = userManager;
         }
 
-        public Core.Entities.Cart UserCart { get; set; }
+        public Core.Entities.Cart? UserCart { get; set; }
         public decimal TotalPrice { get; set; }
 
         [TempData]
